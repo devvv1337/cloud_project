@@ -21,8 +21,8 @@ Ce projet est un pipeline de données qui récupère des informations sur des ch
 
 1. Clonez ce dépôt sur votre machine locale :
    ```
-   git clone <url-du-repo>
-   cd <nom-du-repo>
+   git clone https://github.com/devvv1337/cloud_project.git
+   cd cloud_project
    ```
 
 2. Créez un fichier `.env` à la racine du projet et ajoutez votre clé API YouTube :
