@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Celery beat schedule
+celerybeat-schedule
+
+# Local storage
+local_storage/
+
+# Logs
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Docker secrets (if used)
+docker-secrets/
