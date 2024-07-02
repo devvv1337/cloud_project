@@ -25,9 +25,13 @@ Ce projet est un pipeline de données qui récupère des informations sur des ch
    cd cloud_project
    ```
 
-2. Créez un fichier `.env` à la racine du projet et ajoutez votre clé API YouTube :
+2. Créez un fichier `.env` à la racine du projet et ajoutez votre clé API YouTube et vos identifiants:
    ```
    YOUTUBE_API_KEY=votre_clé_api_youtube
+   DB_PASSWORD=123
+   DB_USER=postgres
+   DB_NAME=postgres
+   DB_HOST=localhost
    ```
 
 ## Installation
