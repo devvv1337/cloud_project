@@ -1,33 +1,33 @@
 # YouTube Data Pipeline
 
-Ce projet est un pipeline de données qui récupère des informations sur des chaînes YouTube spécifiques et leurs dernières vidéos, puis les stocke dans une base de données PostgreSQL.
+This project is a data pipeline that retrieves information about specific YouTube channels and their latest videos, then stores them in a PostgreSQL database.
 
-## Table des matières
+## Table of Contents
 
-1. [Prérequis](#prérequis)
+1. [Prerequisites](#prerequisites)
 2. [Configuration](#configuration)
 3. [Installation](#installation)
-4. [Utilisation](#utilisation)
-5. [Structure du projet](#structure-du-projet)
-6. [Tester les services](#tester-les-services)
-7. [Dépannage](#dépannage)
+4. [Usage](#usage)
+5. [Project Structure](#project-structure)
+6. [Testing the Services](#testing-the-services)
+7. [Troubleshooting](#troubleshooting)
 
-## Prérequis
+## Prerequisites
 
-- Docker et Docker Compose
-- Clé API YouTube (obtenue depuis la Google Developers Console)
+- Docker and Docker Compose
+- YouTube API Key (obtained from the Google Developers Console)
 
 ## Configuration
 
-1. Clonez ce dépôt sur votre machine locale :
-   ```
+1. Clone this repository to your local machine:
+   ```bash
    git clone https://github.com/devvv1337/cloud_project.git
    cd cloud_project
    ```
 
-2. Créez un fichier `.env` à la racine du projet et ajoutez votre clé API YouTube et vos identifiants:
-   ```
-   YOUTUBE_API_KEY=votre_clé_api_youtube
+2. Create a `.env` file at the root of the project and add your YouTube API key and database credentials:
+   ```env
+   YOUTUBE_API_KEY=your_youtube_api_key
    DB_PASSWORD=123
    DB_USER=postgres
    DB_NAME=postgres
@@ -36,82 +36,82 @@ Ce projet est un pipeline de données qui récupère des informations sur des ch
 
 ## Installation
 
-1. Construisez les images Docker :
-   ```
+1. Build the Docker images:
+   ```bash
    docker-compose build
    ```
 
-2. Lancez les services :
-   ```
+2. Start the services:
+   ```bash
    docker-compose up -d
    ```
 
-## Utilisation
+## Usage
 
-Le pipeline est configuré pour s'exécuter automatiquement :
-- La tâche de récupération des données s'exécute tous les jours à 18h00.
-- La tâche de traitement des données s'exécute tous les jours à 18h30.
+The pipeline is configured to run automatically:
+- The data retrieval task runs daily at 6:00 PM.
+- The data processing task runs daily at 6:30 PM.
 
-Vous pouvez également exécuter les tâches manuellement :
+You can also run the tasks manually:
 
-1. Pour la récupération des données :
-   ```
+1. For data retrieval:
+   ```bash
    docker-compose run youtube-data-retrieval python main.py
    ```
 
-2. Pour le traitement des données :
-   ```
+2. For data processing:
+   ```bash
    docker-compose run youtube-data-processing python main.py
    ```
 
-## Structure du projet
+## Project Structure
 
-- `youtube-data-retrieval/`: Service de récupération des données YouTube
-- `youtube-data-processing/`: Service de traitement et d'insertion des données dans la base de données
-- `local_storage/`: Dossier partagé pour stocker les fichiers CSV temporaires
-- `init.sql`: Script d'initialisation de la base de données
-- `docker-compose.yml`: Configuration des services Docker
-- `celery_config.py`: Configuration de Celery pour la planification des tâches
+- `youtube-data-retrieval/`: YouTube data retrieval service
+- `youtube-data-processing/`: Data processing and insertion service into the database
+- `local_storage/`: Shared folder for storing temporary CSV files
+- `init.sql`: Database initialization script
+- `docker-compose.yml`: Docker services configuration
+- `celery_config.py`: Celery configuration for task scheduling
 
-## Tester les services
+## Testing the Services
 
-1. Vérifiez que tous les services sont en cours d'exécution :
-   ```
+1. Ensure all services are running:
+   ```bash
    docker-compose ps
    ```
 
-2. Consultez les logs des services :
-   ```
+2. Check the service logs:
+   ```bash
    docker-compose logs youtube-data-retrieval
    docker-compose logs youtube-data-processing
    ```
 
-3. Vérifiez les fichiers CSV générés dans le dossier `local_storage/`.
+3. Verify the generated CSV files in the `local_storage/` folder.
 
-4. Connectez-vous à la base de données PostgreSQL pour vérifier les données insérées :
-   ```
+4. Connect to the PostgreSQL database to verify the inserted data:
+   ```bash
    docker-compose exec db psql -U postgres -d youtube_data
    ```
-   Puis exécutez des requêtes SQL, par exemple :
+   Then execute SQL queries, for example:
    ```sql
    SELECT * FROM channel;
    SELECT * FROM video;
    SELECT * FROM import_task;
    ```
 
-## Dépannage
+## Troubleshooting
 
-- Si vous rencontrez des problèmes avec les permissions des fichiers, assurez-vous que les dossiers partagés ont les bonnes permissions :
-  ```
+- If you encounter file permission issues, ensure that the shared folders have the correct permissions:
+  ```bash
   chmod -R 777 local_storage/
   ```
 
-- En cas d'erreur liée à l'API YouTube, vérifiez que votre clé API est correcte et n'a pas atteint ses limites d'utilisation.
+- In case of errors related to the YouTube API, verify that your API key is correct and has not exceeded its usage limits.
 
-- Pour réinitialiser complètement le pipeline, vous pouvez supprimer tous les conteneurs et volumes, puis reconstruire :
-  ```
+- To completely reset the pipeline, you can remove all containers and volumes, then rebuild:
+  ```bash
   docker-compose down -v
   docker-compose up -d --build
   ```
 
-Pour toute autre question ou problème, n'hésitez pas à ouvrir une issue dans le dépôt du projet.
+For any other questions or issues, feel free to open an issue in the project repository.
